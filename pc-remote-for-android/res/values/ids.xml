@@ -1,0 +1,21 @@
+<resources>
+    <item name="textView1" type="id"/>
+    <item name="devicelist" type="id"/>
+    <item name="helloLinLay" type="id"/>
+    <item name="connSettingsButton" type="id"/>
+    <item name="touchpadButton" type="id"/>
+    <item name="connSettingsLinearLayout" type="id"/>
+    <item name="connectedToTextView" type="id"/>
+    <item name="disconnectButton" type="id"/>
+    <item name="exitButton" type="id"/>
+    <item name="LayoutDownloaderListView" type="id"/>
+    <item name="refreshLayoutsButton" type="id"/>
+    <item name="UrlEditText" type="id"/>
+    <item name="layoutsMenuButton" type="id"/>
+    <item name="LayoutManagerListView" type="id"/>
+    <item name="LayoutManagerAddNewButton" type="id"/>
+    <item name="LayoutDownloaderNoNewTextView" type="id"/>
+    <item name="LayoutManagerNoResult" type="id"/>
+    <item name="SelectLayoutListView" type="id"/>
+    <item name="SelectLayoutNoResult" type="id"/>
+</resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="vertical">
+    <Button android:id="@id/connSettingsButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/connSettingsButtonText" />
+    <Button android:id="@id/touchpadButton"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:text="@string/touchpadButtonText"/>
+        <Button android:id="@id/layoutsMenuButton"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:text="@string/layoutsMenuButtonText"/>
+    <Button android:id="@id/exitButton"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:text="@string/exitButtonText"/>
+</LinearLayout>

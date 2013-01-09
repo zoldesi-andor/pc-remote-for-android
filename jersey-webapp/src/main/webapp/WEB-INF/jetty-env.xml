@@ -1,0 +1,13 @@
+<Configure id='wac' class="org.mortbay.jetty.webapp.WebAppContext">
+    <New id="mysqldb" class="org.mortbay.jetty.plus.naming.Resource">
+        <Arg>jdbc/mysqldb</Arg>
+        <Arg>
+            <New class="com.mchange.v2.c3p0.ComboPooledDataSource">
+                <Set name="driverClass">com.mysql.jdbc.Driver</Set>
+                <Set name="jdbcUrl">jdbc:mysql://localhost:3306/pcremote</Set>
+                <Set name="user">PCRemoteUser</Set>
+                <Set name="password">pcremote</Set>
+            </New>
+        </Arg>
+    </New>
+</Configure>
