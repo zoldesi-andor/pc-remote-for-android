@@ -12,6 +12,7 @@ import javax.jws.WebResult;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Variant;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,36 +31,32 @@ public class LayoutService {
     @GET
     @Produces("application/json")
     @Path("/list")
-    public JSONArray listLayouts() throws JSONException {
-        JSONArray result = new JSONArray();
-        List<LayoutListItem> items = DAO.getLayouts();
-        for (LayoutListItem item : items) {
-            result.put(item.toJSON());
-        }
+    public List<Layout> listLayouts() throws JSONException, SQLException, XmlValidationException {
+        List<Layout> result = DAO.getLayouts();
         return result;
     }
 
     @GET
     @Produces("application/json")
-    public Layout getLayout(@QueryParam(QueryParamConstants.ID) int id) throws JSONException {
+    public Layout getLayout(@QueryParam(QueryParamConstants.ID) int id) throws JSONException, SQLException, XmlValidationException {
         Layout result = DAO.getLayout(id);
         return result;
     }
 
     @POST
     @Consumes("application/json")
-    public void updateLayout(Layout body) throws JSONException {
+    public void updateLayout(Layout body) throws JSONException, SQLException, XmlValidationException {
         DAO.updateLayout(body);
     }
 
     @PUT
     @Consumes("application/json")
-    public void putLayout(Layout body) throws JSONException {
+    public void putLayout(Layout body) throws JSONException, SQLException, XmlValidationException {
         DAO.insertLayout(body);
     }
 
     @DELETE
-    public void deleteLayout(@QueryParam(QueryParamConstants.ID) int id) throws JSONException {
+    public void deleteLayout(@QueryParam(QueryParamConstants.ID) int id) throws JSONException, SQLException {
         DAO.deleteLayout(id);
     }
 }

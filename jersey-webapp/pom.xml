@@ -33,10 +33,20 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>tomcat-maven-plugin</artifactId>
+                <version>1.1</version>
                 <configuration>
-                    <server>local_tomcat</server>
+                    <server>local-tomcat</server>
                     <url>http://localhost:8080/manager/text</url>
-                    <serverXml>server.xml</serverXml>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>maven-jetty-plugin</artifactId>
+                <version>6.1.10</version>
+                <configuration>
+                    <scanIntervalSeconds>10</scanIntervalSeconds>
+                    <stopKey>foo</stopKey>
+                    <stopPort>9999</stopPort>
                 </configuration>
             </plugin>
         </plugins>
@@ -54,27 +64,15 @@
             <version>1.8</version>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.8.2</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>com.sun.jersey</groupId>
             <artifactId>jersey-client</artifactId>
             <version>1.8</version>
-            <scope>test</scope>
         </dependency>
+
         <dependency>
-            <groupId>org.glassfish.distributions</groupId>
-            <artifactId>web-all</artifactId>
-            <version>10.0-build-20080430</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.embedded</groupId>
-            <artifactId>gf-embedded-api</artifactId>
-            <version>1.0-alpha-4</version>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.2</version>
             <scope>test</scope>
         </dependency>
 
@@ -100,29 +98,4 @@
             <version>1.0</version>
         </dependency>
     </dependencies>
-    <properties>
-        <jersey-version>1.8</jersey-version>
-    </properties>
-    <repositories>
-        <repository>
-            <id>glassfish.java.net</id>
-            <name>GlassFish Maven Repository</name>
-            <url>http://download.java.net/maven/glassfish</url>
-            <layout>default</layout>
-        </repository>
-        <repository>
-            <id>m2.java.net</id>
-            <name>Java.net Maven 2 Repository</name>
-            <url>http://download.java.net/maven/2</url>
-            <layout>default</layout>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>m2.java.net</id>
-            <name>Java.net Maven 2 Repository</name>
-            <url>http://download.java.net/maven/2</url>
-            <layout>default</layout>
-        </pluginRepository>
-    </pluginRepositories>
 </project>

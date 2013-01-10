@@ -25,16 +25,16 @@ import java.util.List;
 public class DAO {
     private static final Logger log = Logger.getLogger(DAO.class);
     private static final String DATASOURCE_CONTEXT = "java:comp/env/jdbc/mysqldb";
-    private static final String listLayoutsQuery = "SELECT id as id, name as name FROM layouts";
+    private static final String listLayoutsQuery = "SELECT id as id, name as name, text as text FROM layouts";
     private static final String getLayoutQuery = "SELECT id as id, name as name, text as text FROM layouts WHERE id = ?";
     private static final String updateLayoutQuery = "UPDATE layouts SET name=?, text=? WHERE id = ?";
     private static final String insertLayoutQuery = "INSERT INTO layouts(name, text) VALUES(?, ?)";
     private static final String deleteLayoutQuery = "DELETE FROM layouts WHERE id = ?";
 
 
-    public static List<LayoutListItem> getLayouts() {
+    public static List<Layout> getLayouts() throws SQLException, XmlValidationException {
 
-        List<LayoutListItem> result = new ArrayList<LayoutListItem>();
+        List<Layout> result = new ArrayList<Layout>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -44,14 +44,13 @@ public class DAO {
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                LayoutListItem item = new LayoutListItem();
-                item.setId(resultSet.getInt("id"));
-                item.setName(resultSet.getString("name"));
+                Layout item = new Layout();
+                item.id = resultSet.getInt("id");
+                item.name = resultSet.getString("name");
+                item.setXML( resultSet.getString("text"));
                 result.add(item);
             }
 
-        } catch (SQLException se) {
-            log.error(se);
         } finally {
             if (resultSet != null)
                 try {
@@ -75,7 +74,7 @@ public class DAO {
         return result;
     }
 
-    public static Layout getLayout(int id) {
+    public static Layout getLayout(int id) throws SQLException, XmlValidationException {
 
         Layout result = new Layout();
         Connection connection = null;
@@ -93,11 +92,6 @@ public class DAO {
                 result.setXML(resultSet.getString("text"));
             }
 
-        } catch (SQLException se) {
-            log.error(se);
-        } catch (XmlValidationException e) {
-            e.printStackTrace();
-            log.error("Not valid xml in the DB!!!!!!!!!!!");
         } finally {
             if (resultSet != null)
                 try {
@@ -121,7 +115,7 @@ public class DAO {
         return result;
     }
 
-    public static void updateLayout(Layout layout) {
+    public static void updateLayout(Layout layout) throws SQLException, XmlValidationException {
 
         List<String> result = new ArrayList<String>();
         Connection connection = null;
@@ -134,13 +128,7 @@ public class DAO {
             preparedStatement.setInt(3, layout.id);
             preparedStatement.execute();
 
-        } catch (SQLException se) {
-            log.error(se);
-        } catch (XmlValidationException e) {
-            e.printStackTrace();
-            //This part should not be reached at this part the xml has to be valid because of the JAXB parsing
-            throw new RuntimeException("Unexpected Exception");
-        } finally {
+        }finally {
             if (preparedStatement != null)
                 try {
                     preparedStatement.close();
@@ -156,7 +144,7 @@ public class DAO {
         }
     }
 
-    public static void insertLayout(Layout layout) {
+    public static void insertLayout(Layout layout) throws SQLException, XmlValidationException {
 
         List<String> result = new ArrayList<String>();
         Connection connection = null;
@@ -168,13 +156,7 @@ public class DAO {
             preparedStatement.setString(2, layout.getXML());
             preparedStatement.execute();
 
-        } catch (SQLException se) {
-            log.error(se);
-        } catch (XmlValidationException e) {
-            e.printStackTrace();
-            //This part should not be reached at this part the xml has to be valid because of the JAXB parsing
-            throw new RuntimeException("Unexpected Exception");
-        } finally {
+        }finally {
             if (preparedStatement != null)
                 try {
                     preparedStatement.close();
@@ -190,7 +172,7 @@ public class DAO {
         }
     }
 
-    public static void deleteLayout(int id) {
+    public static void deleteLayout(int id) throws SQLException {
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -200,8 +182,6 @@ public class DAO {
             preparedStatement.setInt(1, id);
             preparedStatement.execute();
 
-        } catch (SQLException se) {
-            log.error(se);
         } finally {
             if (preparedStatement != null)
                 try {

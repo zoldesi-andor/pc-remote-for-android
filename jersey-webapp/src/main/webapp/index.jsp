@@ -1,135 +1,97 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title></title>
-    <script type="text/javascript" language="javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.4.min.js" ></script>
-</head>
-<body>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Bootstrap, from Twitter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-<h2>Jersey RESTful Web Application!</h2>
-<p><a href="webresources/layouts/list">Jersey resource</a>
-<p>Visit the <a href="http://jersey.java.net">Project Jersey website</a>
-for more information on Jersey!
+    <!-- Le styles -->
+    <link href="./css/bootstrap.css" rel="stylesheet">
+    <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+    </style>
+    <link href="./css/bootstrap-responsive.css" rel="stylesheet">
 
-    <p id="ptext">
-        <label for="text">Text:</label>
-        <input id="text" name="text" type="text" />
-    </p>
-    <p>
-        <label for="type">Type:</label>
-        <select id="type">
-            <option>Hello</option>
-            <option>Bello</option>
-        </select>
-    </p>
-    <a id="add" href="">Add new line</a>
-    <div id="main">
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">Template Repository</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="#">Template List</a></li>
+              <li><a href="#about">New Template</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
     </div>
+    <div class="container">
 
-    <input id="btnSend" type="button" value="Send" />
+        <h1>Bootstrap starter template</h1>
+        <p>Use this document as a way to quick start any new project.<br> All you get is this message and a barebones HTML document.</p>
 
-    <div id="result">
-
-    </div>
-
-    <div id="puffer">
-        <table>
-
+<div class="row">
+        <table class="table table-striped span4" data-bind='visible: listViewModel.selectedItem() == null'>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: listViewModel.layouts">
+                <tr data-bind="click: $root.listViewModel.selectItem">
+                    <td data-bind="text: id"></td>
+                    <td data-bind="text: name"></td>
+                </tr>
+            </tbody>
         </table>
-    </div>
 
-    <script type="text/javascript">
-        var j = new Array();
-        i = 0;
-        $(document).ready(function () {
+        <div class="span8" data-bind='visible: listViewModel.selectedItem() != null'>
+            <form>
+                <p>
+                    <input id="name" class="input-block-level" data-bind="value: listViewModel.name" type="text" />
+                </p>
+                <p>
+                    <textarea id="xml" class="input-block-level" data-bind="value: listViewModel.text" cols="60"></textarea>
+                </p>
+                <p>
+                    <a data-bind="click: listViewModel.saveItem" href="#" class="btn btn-success">Save</a>
+                    <a data-bind="click: listViewModel.deleteItem" href="#" class="btn btn-danger">Delete</a>
+                    <a data-bind="click: listViewModel.cancelEdit" href="#" class="btn">Cancel</a>
+                </p>
+            </form>
 
-            $.get('http://192.168.1.100:8080/jersey-webapp/webresources/layouts/list', function (data) {
-                debugger;
-                $("#result").html(data);
+        </div>
 
-            });
+</div>
 
-            /////////////////////////////////////
-            // Disable not used elements by type
-            //
-            $("#type").change(function (event) {
-                if (this.value == "Bello") {
-                    $("#ptext").hide();
-                } else {
-                    $("#ptext").show();
-                }
-            });
+    </div> <!-- /container -->
 
-            //////////////
-            // Send button
-            //
-            $("#btnSend").click(function (event) {
-                debugger;
-                var data = $("#puffer").html();
-            });
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="./js/jquery-1.8.3.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/knockout-2.2.0.js"></script>
+    <script src="./js/sammy.min.js"></script>
+    <script src="./js/app.js"></script>
 
-            /////////////////
-            // New Row Button
-            //
-            $("#add").click(function (event) {
-                i++;
-                $("#main").append(
-                    "<p id=\"p" + i + "\">" +
-                        "<input id=\"d" + i + "\" name=" + i + " type=\"button\" value=\"Delete\"/>" +
-                        "<input id=\"b" + i + "\" name=" + i + " type=\"button\" value=\"Add item\"/>:" +
-                    "</p>");
-
-                $("table").append("<row id=\"r" + i + "\"></row>");
-
-                ///////////////
-                // Add new item
-                //
-                $("#b" + i).click(function (event) {
-                    index = event.target.name;
-                    if (j[index] == null)
-                        j[index] = 1;
-                    else
-                        j[index]++;
-
-                    var text = $("#text").val();
-                    $("#text").val("");
-                    var type = $("#type").val();
-
-                    $("#p" + index).append(
-                        "<input " +
-                            "id=\"btn" + index + j[index] + "\" " +
-                            "name=" + index + "|" + j[index] + " " +
-                            "type=\"button\" " +
-                            "value=\"" + text + "\"/>");
-
-                    $("#r" + index).append(
-                        "<button " +
-                            "id=\"rcbtn" + index + j[index] + "\" " +
-                            "name=" + index + "|" + j[index] + " " +
-                            "type=\"" + type + "\" " +
-                            "value=\"" + text + "\"/>");
-
-                    ///////////////
-                    // Delete Item
-                    //
-                    $("#btn" + index + j[index]).click(function (event) {
-                        var t = this.name.split("|");
-                        $("#btn" + t[0] + t[1]).remove();
-                        $("#rcbtn" + t[0] + t[1]).remove();
-                    });
-                });
-
-                //////////////
-                // Delete Row
-                //
-                $("#d" + i).click(function (event) {
-                    $("#p" + this.name).remove();
-                    $("#r" + this.name).remove();
-                });
-                event.preventDefault();
-            });
-        })
-    </script>
-</body>
+  </body>
 </html>
