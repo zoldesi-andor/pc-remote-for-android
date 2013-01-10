@@ -35,6 +35,9 @@ public class EventSender {
         if (dll == null) {
             throw new RuntimeException("Not supported OS");
         }
+        logger.debug(System.getProperty("os.name"));
+        logger.debug(System.getProperty("os.arch"));
+        logger.debug("loading lib: " + currentDir + "\\" + dll);
         System.load(currentDir + "\\" + dll);
     }
 

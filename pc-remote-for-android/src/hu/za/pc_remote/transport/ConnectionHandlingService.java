@@ -77,13 +77,17 @@ public class ConnectionHandlingService extends Service {
         @Override
         public void onReceive(Context context, Intent intent) {
             RCAction data = (RCAction) intent.getSerializableExtra(INTENT_DATA_EXTRA_KEY);
-            if (mTransportManager != null && mTransportManager.isAlive()) {
-                mTransportManager.Send(data);
-            } else {
-                Log.e(tag, "Trying to write data to uninitialized ObjectOutputStream");
-                ConnectionHandlingService.this.stopSelf();
-            }
+            sendData(data);
             Log.i(tag, String.format("%s action received", data.type.toString()));
+        }
+    }
+
+    public void sendData(RCAction data){
+        if (mTransportManager != null && mTransportManager.isAlive()) {
+            mTransportManager.Send(data);
+        } else {
+            Log.e(tag, "Trying to write data to uninitialized ObjectOutputStream");
+            ConnectionHandlingService.this.stopSelf();
         }
     }
 

@@ -1,12 +1,16 @@
 package hu.za.pc_remote.ui.remotecontrol;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.*;
+import android.widget.Toast;
 import hu.za.pc_remote.common.RCAction;
 import hu.za.pc_remote.transport.ConnectionHandlingService;
 
@@ -52,6 +56,7 @@ public class TouchPad extends SurfaceView implements SurfaceHolder.Callback {
         drawer.start();
 
         sender = new Sender();
+        sender.doBindService();
         sender.start();
     }
 
@@ -122,16 +127,45 @@ public class TouchPad extends SurfaceView implements SurfaceHolder.Callback {
     private class Sender extends Thread {
         public boolean running = true;
 
+        private ConnectionHandlingService mConnService;
+
+        private ServiceConnection mConnection = new ServiceConnection() {
+            public void onServiceConnected(ComponentName className, IBinder service) {
+                mConnService = ((ConnectionHandlingService.LocalBinder) service).getService();
+            }
+
+            public void onServiceDisconnected(ComponentName className) {
+                mConnService = null;
+            }
+        };
+
+        public void doBindService(){
+            context.bindService(
+                    new Intent(context, ConnectionHandlingService.class),
+                    mConnection, Context.BIND_AUTO_CREATE);
+        }
+
+        void doUnbindService() {
+            if (mConnService != null) {
+                context.unbindService(mConnection);
+            }
+        }
+
         public void run() {
 
             while (running) {
                 if (dx != 0 || dy != 0) {
-                    Intent i = new Intent(ConnectionHandlingService.RC_INTENT_ACTION);
-                    RCAction extra = new RCAction();
-                    extra.type = RCAction.Type.MOUSE_MOVE;
-                    extra.arguments = new Float[]{sensitivity * dx, sensitivity * dy};
-                    i.putExtra(ConnectionHandlingService.INTENT_DATA_EXTRA_KEY, extra);
-                    context.sendBroadcast(i);
+                    //Intent i = new Intent(ConnectionHandlingService.RC_INTENT_ACTION);
+                    RCAction data = new RCAction();
+                    data.type = RCAction.Type.MOUSE_MOVE;
+                    data.arguments = new Float[]{sensitivity * dx, sensitivity * dy};
+
+                    if(mConnService != null){
+                        mConnService.sendData(data);
+                    }
+
+                    //i.putExtra(ConnectionHandlingService.INTENT_DATA_EXTRA_KEY, extra);
+                    //context.sendBroadcast(i);
                 }
                 dx = 0;
                 dy = 0;
