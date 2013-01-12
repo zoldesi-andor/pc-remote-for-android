@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import hu.za.pc_remote.R;
 import hu.za.pc_remote.transport.ConnectionHandlingService;
 import hu.za.pc_remote.ui.remotecontrol.SelectLayout;
@@ -26,18 +27,18 @@ public class MainMenu extends Activity {
         final Intent i = new Intent(this, ConnectionHandlingService.class);
         startService(i);
 
-        setContentView(R.layout.mainmenu);
+        setContentView(R.layout.main);
 
-        Button button = (Button) findViewById(R.id.connSettingsButton);
+        ImageButton button = (ImageButton) findViewById(R.id.connSettingsButton);
         button.setOnClickListener(new MainMenuEntry(ConnectionSettings.class));
 
-        button = (Button) findViewById(R.id.touchpadButton);
+        button = (ImageButton) findViewById(R.id.touchpadButton);
         button.setOnClickListener(new MainMenuEntry(SelectLayout.class));
 
-        button = (Button) findViewById(R.id.layoutsMenuButton);
+        button = (ImageButton) findViewById(R.id.layoutsMenuButton);
         button.setOnClickListener(new MainMenuEntry(LayoutManager.class));
 
-        button = (Button) findViewById(R.id.exitButton);
+        button = (ImageButton) findViewById(R.id.exitButton);
         button.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {

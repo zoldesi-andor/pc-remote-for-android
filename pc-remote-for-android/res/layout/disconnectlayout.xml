@@ -4,6 +4,11 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
               android:orientation="vertical">
+    <TextView
+            android:layout_width="fill_parent"
+            android:text="@string/connectHeader"
+            style="@style/HeaderText"/>
+
     <android.widget.TextView android:id="@id/connectedToTextView"
                              android:text="@string/connectedText"
                              android:layout_height="wrap_content"

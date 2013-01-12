@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">pc-remote-for-android</string>
+    <string name="app_name">remote control</string>
     <string name="hello">Hello World</string>
     <string name="connSettingsButtonText">Connection Settings</string>
     <string name="touchpadButtonText">Select Layout</string>
@@ -12,10 +12,15 @@
     <string name="defaultUrl">192.168.1.100</string>
     <string name="layoutsMenuButtonText">Manage Layouts</string>
     <string name="NoReuslt">No result</string>
-    <string name="AddNewLayout">Add Layout</string>
+    <string name="AddNewLayout">Download Controllers</string>
     <string name="deleteLayout">Delete</string>
     <string name="layoutDeleted">Successfully deleted</string>
     <string name="downloadSuccessful">Download Successful</string>
     <string name="FailedToConnect">Failed to connect</string>
     <string name="StorageNotAvailable">Storage not available</string>
+    <string name="mainMenuText">Main Menu</string>
+    <string name="connectHeader">Connection Settings</string>
+    <string name="layoutDownloaderHeader">Download Controllers</string>
+    <string name="layoutManagerHeader">Manage Controllers</string>
+    <string name="selectLayoutHeader">Select Controller</string>
 </resources>

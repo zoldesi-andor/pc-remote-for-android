@@ -4,6 +4,11 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
               android:orientation="vertical">
+    <TextView
+            android:layout_width="fill_parent"
+            android:text="@string/layoutDownloaderHeader"
+            style="@style/HeaderText"/>
+
     <LinearLayout android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:orientation="horizontal">>
@@ -17,6 +22,7 @@
               android:layout_height="wrap_content"
               android:text="@string/defaultUrl" />
     </LinearLayout>
+
     <ListView android:id="@id/LayoutDownloaderListView"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"/>
